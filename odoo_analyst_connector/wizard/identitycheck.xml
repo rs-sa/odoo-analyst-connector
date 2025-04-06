@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_budget_form" model="ir.ui.view">
+        <field name="name">project.budget : Form</field>
+        <field name="model">project.budget</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="company_id" invisible="1"/>
+                <field name="company_currency" invisible="1"/>
+                <sheet>
+                    <field name="mode" widget="selection_badge"/>
+                    <group invisible="mode != 'server'" class="mt-4">
+                        <group>
+                            <field name="company_ids" string="Companies" widget="many2many_tags"
+                                   placeholder="Leave empty to use all records"
+                                   options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                            <field name="search_value" string="Search" placeholder="Search by project name"/>
+                            <!--                                    <field name="group_by" string="Group By" widget="selection_badge"/>-->
+                        </group>
+                    </group>
+                    <group invisible="mode != 'file'" class="mt-4">
+                        <group>
+                            <field name="file" filename="filename"
+                                   options="{'accepted_file_extensions': 'application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'number_of_files': 1}"/>
+                            <field name="filename" invisible="1" force_save="1"/>
+                            <!--                            <field name="column_mapping_ids"/>-->
+                        </group>
+                        <group>
+                            <field name="file_data_json" widget="text" invisible="1" force_save="1"/>
+                        </group>
+                        <field name="column_mapping" widget="dynamic_import" colspan="4" force_save="1"/>
+                        <field name="file_data_html"/>
+                    </group>
+
+                    <div>
+                        <separator string="Select diagram view"/>
+                        <div class="rs-odoo-sync-diagram">
+                            <div>
+                                <field name="ok_column_chart" nolabel="1"/>
+                                <img src="rs_odoo_sync_base/static/src/img/column-chart.png" alt="Column chart"/>
+                            </div>
+                            <div>
+                                <field name="ok_area_chart" nolabel="1"/>
+                                <img src="rs_odoo_sync_base/static/src/img/area-chart.png" alt="Column chart"/>
+                            </div>
+                            <div>
+                                <field name="ok_line_chart" nolabel="1"/>
+                                <img src="rs_odoo_sync_base/static/src/img/line-chart.png" alt="Column chart"/>
+                            </div>
+                            <div>
+                                <field name="ok_pie_chart" nolabel="1"/>
+                                <img src="rs_odoo_sync_base/static/src/img/pie-chart.png" alt="Column chart"/>
+                            </div>
+                            <div>
+                                <field name="ok_doughnut_chart" nolabel="1"/>
+                                <img src="rs_odoo_sync_base/static/src/img/doughnut-chart.png" alt="Column chart"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sync-multi-diagram">
+                        <table class="table table-bordered rs-odoo-sync rs-odoo-sync-diagram-conf" style="width: 52%;">
+                            <thead>
+                                <tr>
+                                    <th class="text-right" style="background: #546e7a !important;padding:5px">
+                                        <strong>X-axes</strong>
+                                    </th>
+                                    <th class="text-right" style="background: #546e7a !important;padding:5px">
+                                        <strong>Y-axes</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th style="padding:5px">
+                                        <field name="x_axis" style="width:100%" required="1" placeholder="Select X-axes"/>
+                                    </th>
+                                    <th style="padding:5px">
+                                        <field name="y_axis" style="width:100%" required="1" placeholder="Select Y-axes"/>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <separator string="Preview" class="sync-separator"/>
+                    <field name="output_preview" readonly="1" force_save="1"/>
+                </sheet>
+                <footer>
+                    <button name="action_print_excel" string="Print Excel" type="object" class="oe_highlight"/>
+                    <button name="action_print_pdf" string="Print PDF" type="object" class="oe_highlight"/>
+                    <button name="action_preview" string="Preview Results" type="object" class="btn-info"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--        &lt;!&ndash; [ project.budget : Action ]=======================================  &ndash;&gt;-->
+    <!--        <record id="project_budget_action" model="ir.actions.act_window">-->
+    <!--            <field name="name">Project budget</field>-->
+    <!--            <field name="type">ir.actions.act_window</field>-->
+    <!--            <field name="res_model">project.budget</field>-->
+    <!--            <field name="view_mode">form</field>-->
+    <!--            <field name="target">new</field>-->
+    <!--        </record>-->
+</odoo>
