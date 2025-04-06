@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="res.groups" id="group_system_odoo_sync">
+            <field name="name">Settings - With Odoo Analyst</field>
+            <field name="implied_ids" eval="[Command.link(ref('base.group_system'))]"/>
+            <field name="users" eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"/>
+            <field name="category_id" ref="base.module_category_administration_administration"/>
+        </record>
+
+    </data>
+</odoo>

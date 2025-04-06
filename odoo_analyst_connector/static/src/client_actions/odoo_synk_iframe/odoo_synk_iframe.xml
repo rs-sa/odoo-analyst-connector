@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<t t-name="odoo_analyst_connector.OdooSyncIframe" owl="1">
+    <div class="o_odoo_sync_iframe h-100">
+        <t t-if="state.isLoading">
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </t>
+        <t t-elif="state.error">
+            <div class="alert alert-danger" role="alert">
+                <t t-esc="state.error"/>
+            </div>
+        </t>
+        <t t-else="">
+            <div class="d-flex flex-column h-100">
+                <div class="flex-grow-1">
+                    <iframe  id="odoo-analyst-iframe"
+                        t-att-src="state.iframeUrl"
+                        class="w-100 h-100 border-0"
+                        t-on-load="handleIframeLoad"
+                        allow="fullscreen"
+                    />
+                </div>
+            </div>
+        </t>
+    </div>
+</t>
+
+</templates>
