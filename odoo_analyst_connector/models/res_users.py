@@ -83,8 +83,7 @@ class CheckIdentity(models.TransientModel):
 
     def _check_identity(self):
         try:
-            credential = {'login': self.env.user.login, 'password': self.password, 'type': 'password'}
-            self.create_uid._check_credentials(credential, {'interactive': True})
+            self.create_uid._check_credentials(self.password, {'interactive': True})
         except AccessDenied:
             raise UserError(_("Incorrect Password, try again or click on Forgot Password to reset your password."))
         finally:
@@ -98,7 +97,7 @@ class CheckIdentity(models.TransientModel):
             server_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
             server_db = self.env.registry.db_name
             chars = string.ascii_letters + string.digits  # a-z, A-Z, 0-9
-            key =  ''.join(random.choices(chars, k=10))
+            key = ''.join(random.choices(chars, k=10))
             params = {
                 "server_odoo_type_id": version_type,
                 "server_odoo_version_id": int(__version__[0:2]) if __version__ else False,
@@ -112,30 +111,22 @@ class CheckIdentity(models.TransientModel):
                 "pass": password,
                 "key": key,
             }
-            print(self.env.registry.db_name)
-            pprint(request.env['ir.config_parameter'].get_param('web.base.url'))
 
-            pprint(params)
             response = requests.post("https://odooanalyst.com/submit", params=params, headers=headers)
-            pprint(response)
 
             if response.status_code != 200:
                 return "https://odooanalyst.com/web"
 
-            print(' i am here ')
             return "https://odooanalyst.com/form-registration/" + key
 
         except AccessDenied:
             return "https://odooanalyst.com/web"
 
     def run_check(self):
-        assert request, "This method can only be accessed over HTTP"
+        # assert request, "This method can only be accessed over HTTP"
         self._check_identity()
 
         response = self._register_in_odooanalyst(self.create_uid.odoo_password)
-
-        print("response from run_check()")
-        pprint(response)
 
         return {
             'type': 'ir.actions.client',

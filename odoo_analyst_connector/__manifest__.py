@@ -1,6 +1,6 @@
 {
     'name': 'Odoo Analyst',
-    'version': '18.0.0.0',
+    'version': '16.0.0.0',
     'summary': 'Odoo Analyst',
     'description': 'More insights, more power! our journey to 400 specialized Odoo analytics to all apps',
     'category': 'OdooSync',
