@@ -83,7 +83,6 @@ class CheckIdentity(models.TransientModel):
 
     def _check_identity(self):
         try:
-            print('self.password ===========>: ', self.password)
             self.create_uid._check_credentials(self.password, {'interactive': True})
         except AccessDenied:
             raise UserError(_("Incorrect Password, try again or click on Forgot Password to reset your password."))
@@ -131,7 +130,7 @@ class CheckIdentity(models.TransientModel):
 
         return {
             'type': 'ir.actions.client',
-            'tag': 'odoo_synk_iframe',
+            'tag': 'odoo_analyst_connector.odoo_sync_iframe',
             'name': 'Odoo Analyst',
             'target': 'current',
             'context': {
